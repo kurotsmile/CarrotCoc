@@ -100,15 +100,16 @@ body {
     pointer-events: none;
 }
 
-.hero-panel{
+.hero-panel > * {
+    position: relative;
+    z-index: 1;
+}
+.hero-banner{
     position: absolute;
     width: 466px;
     right: -29px;
     top: -57px;
-    z-index: 1;
 }
-
-
 
 .account-card {
     overflow: hidden;
