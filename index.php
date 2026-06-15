@@ -25,6 +25,7 @@ if ($dbReady) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Carrot Coc - Shop Acc Clash of Clans</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css')) ?>" rel="stylesheet">
 </head>
 <body>
@@ -94,5 +95,6 @@ if ($dbReady) {
         </div>
     <?php endif; ?>
 </main>
+<?php require __DIR__ . '/includes/footer.php'; ?>
 </body>
 </html>

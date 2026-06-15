@@ -12,8 +12,9 @@ if (!$account) {
 $data = $account ? coc_decode_json($account['data']) : [];
 $photos = $account ? coc_decode_photos($account['photos']) : [];
 $th = coc_townhall_level($data);
-$paypalClientId = getenv('PAYPAL_CLIENT_ID') ?: '';
-$paypalCurrency = getenv('PAYPAL_CURRENCY') ?: 'USD';
+$paypalConfig = require __DIR__ . '/config/paypal.php';
+$paypalClientId = $paypalConfig['client_id'] ?? '';
+$paypalCurrency = $paypalConfig['currency'] ?? 'USD';
 ?>
 <!doctype html>
 <html lang="vi">
@@ -22,6 +23,7 @@ $paypalCurrency = getenv('PAYPAL_CURRENCY') ?: 'USD';
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $account ? htmlspecialchars($account['name']) : 'Không tìm thấy acc' ?> - Carrot Coc</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css')) ?>" rel="stylesheet">
 </head>
 <body>
@@ -92,6 +94,7 @@ $paypalCurrency = getenv('PAYPAL_CURRENCY') ?: 'USD';
         </section>
     <?php endif; ?>
 </main>
+<?php require __DIR__ . '/includes/footer.php'; ?>
 
 <?php if ($account && $paypalClientId): ?>
 <script src="https://www.paypal.com/sdk/js?client-id=<?= urlencode($paypalClientId) ?>&currency=<?= urlencode($paypalCurrency) ?>"></script>

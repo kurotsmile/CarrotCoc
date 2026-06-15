@@ -10,11 +10,14 @@ function paypal_json_response(array $payload, int $status = 200): void
 
 function paypal_config(): array
 {
+    $fileConfig = require __DIR__ . '/../config/paypal.php';
+    $mode = $fileConfig['mode'] ?? 'sandbox';
+
     return [
-        'client_id' => getenv('PAYPAL_CLIENT_ID') ?: '',
-        'secret' => getenv('PAYPAL_CLIENT_SECRET') ?: '',
-        'currency' => getenv('PAYPAL_CURRENCY') ?: 'USD',
-        'base_url' => (getenv('PAYPAL_MODE') ?: 'sandbox') === 'live'
+        'client_id' => $fileConfig['client_id'] ?? '',
+        'secret' => $fileConfig['client_secret'] ?? '',
+        'currency' => $fileConfig['currency'] ?? 'USD',
+        'base_url' => $mode === 'live'
             ? 'https://api-m.paypal.com'
             : 'https://api-m.sandbox.paypal.com',
     ];
@@ -88,4 +91,3 @@ function paypal_input(): array
     $input = json_decode($raw ?: '{}', true);
     return is_array($input) ? $input : [];
 }
-
