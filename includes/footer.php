@@ -10,7 +10,7 @@
                     </span>
                     <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
                 </a>
-                <p class="muted-text mt-3 mb-0">Đồng hành cùng Carrot Coc trong trải nghiệm mua acc Clash of Clans an toàn và nhanh gọn.</p>
+                <p class="muted-text mt-3 mb-0">Đồng hành cùng COC Shop trong trải nghiệm mua acc Clash of Clans an toàn và nhanh gọn.</p>
             </div>
 
             <div>

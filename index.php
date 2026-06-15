@@ -4,11 +4,15 @@ require __DIR__ . '/includes/coc_helpers.php';
 
 $accounts = [];
 $townhall = isset($_GET['townhall']) ? (int) $_GET['townhall'] : 0;
+$search = trim((string) ($_GET['q'] ?? ''));
 $dbReady = $pdo instanceof PDO;
 
 if ($dbReady) {
     try {
         $accounts = $pdo->query('SELECT id, name, data, avatar, price FROM coc ORDER BY id DESC')->fetchAll();
+        if ($search !== '') {
+            $accounts = array_values(array_filter($accounts, fn($account) => stripos($account['name'], $search) !== false));
+        }
         if ($townhall > 0) {
             $accounts = array_values(array_filter($accounts, fn($account) => coc_townhall_level(coc_decode_json($account['data'])) === $townhall));
         }
@@ -23,24 +27,36 @@ if ($dbReady) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Carrot Coc - Shop Acc Clash of Clans</title>
+    <title>COC Shop - Shop Acc Clash of Clans</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= htmlspecialchars(coc_asset('favicon/apple-touch-icon.png')) ?>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= htmlspecialchars(coc_asset('favicon/favicon-32x32.png')) ?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= htmlspecialchars(coc_asset('favicon/favicon-16x16.png')) ?>">
+    <link rel="icon" href="<?= htmlspecialchars(coc_asset('favicon/favicon.ico')) ?>">
+    <link rel="manifest" href="<?= htmlspecialchars(coc_asset('favicon/site.webmanifest')) ?>">
+    <meta name="theme-color" content="#071625">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css')) ?>" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark glass-nav">
-    <div class="container py-2">
+    <div class="container py-2 nav-inner">
         <a class="navbar-brand d-flex align-items-center gap-3 fw-bold" href="index.php">
             <span class="brand-mark">CC</span>
-            <span>Carrot Coc</span>
+            <span>COC Shop</span>
         </a>
-        <a class="btn btn-sm btn-outline-light" href="/CarrotAdmin/index.php">Admin</a>
+        <form class="nav-search" method="get" action="index.php" role="search">
+            <i class="bi bi-search" aria-hidden="true"></i>
+            <input class="form-control" type="search" name="q" value="<?= htmlspecialchars($search) ?>" placeholder="Tìm acc Clash of Clans" aria-label="Tìm acc Clash of Clans">
+            <?php if ($townhall > 0): ?>
+                <input type="hidden" name="townhall" value="<?= (int) $townhall ?>">
+            <?php endif; ?>
+        </form>
     </div>
 </nav>
 
 <main class="container py-5">
-    <section class="glass-panel p-4 p-lg-5 mb-4">
+    <section class="glass-panel hero-panel p-4 p-lg-5 mb-4">
         <div class="row g-4 align-items-end">
             <div class="col-lg-7">
                 <p class="text-uppercase fw-bold muted-text mb-2">Shop acc Clash of Clans</p>
@@ -49,6 +65,9 @@ if ($dbReady) {
             </div>
             <div class="col-lg-5">
                 <form class="row g-2 justify-content-lg-end" method="get">
+                    <?php if ($search !== ''): ?>
+                        <input type="hidden" name="q" value="<?= htmlspecialchars($search) ?>">
+                    <?php endif; ?>
                     <div class="col-sm-8">
                         <label class="form-label" for="townhall">Lọc cấp nhà chính</label>
                         <select class="form-select" id="townhall" name="townhall">
@@ -71,7 +90,7 @@ if ($dbReady) {
     <?php elseif (!$accounts): ?>
         <div class="glass-panel p-5 text-center">
             <h2 class="h4">Chưa có acc phù hợp</h2>
-            <p class="muted-text mb-0">Vào trang admin để thêm acc Clash of Clans đầu tiên.</p>
+            <p class="muted-text mb-0">Hiện chưa có acc Clash of Clans phù hợp với bộ lọc.</p>
         </div>
     <?php else: ?>
         <div class="row g-4">

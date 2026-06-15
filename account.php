@@ -21,18 +21,28 @@ $paypalCurrency = $paypalConfig['currency'] ?? 'USD';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= $account ? htmlspecialchars($account['name']) : 'Không tìm thấy acc' ?> - Carrot Coc</title>
+    <title><?= $account ? htmlspecialchars($account['name']) : 'Không tìm thấy acc' ?> - COC Shop</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= htmlspecialchars(coc_asset('favicon/apple-touch-icon.png')) ?>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= htmlspecialchars(coc_asset('favicon/favicon-32x32.png')) ?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= htmlspecialchars(coc_asset('favicon/favicon-16x16.png')) ?>">
+    <link rel="icon" href="<?= htmlspecialchars(coc_asset('favicon/favicon.ico')) ?>">
+    <link rel="manifest" href="<?= htmlspecialchars(coc_asset('favicon/site.webmanifest')) ?>">
+    <meta name="theme-color" content="#071625">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css')) ?>" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark glass-nav">
-    <div class="container py-2">
+    <div class="container py-2 nav-inner">
         <a class="navbar-brand d-flex align-items-center gap-3 fw-bold" href="index.php">
             <span class="brand-mark">CC</span>
-            <span>Carrot Coc</span>
+            <span>COC Shop</span>
         </a>
+        <form class="nav-search" method="get" action="index.php" role="search">
+            <i class="bi bi-search" aria-hidden="true"></i>
+            <input class="form-control" type="search" name="q" placeholder="Tìm acc Clash of Clans" aria-label="Tìm acc Clash of Clans">
+        </form>
     </div>
 </nav>
 
