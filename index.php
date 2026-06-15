@@ -42,11 +42,11 @@ if ($dbReady) {
 <nav class="navbar navbar-expand-lg navbar-dark glass-nav">
     <div class="container py-2 nav-inner">
         <a class="navbar-brand d-flex align-items-center gap-3 fw-bold" href="index.php">
-            <span class="brand-mark">CC</span>
+            <img class="brand-mark" src="<?= htmlspecialchars(coc_asset('favicon/apple-touch-icon.png')) ?>" alt="COC Shop">
             <span>COC Shop</span>
         </a>
         <form class="nav-search" method="get" action="index.php" role="search">
-            <i class="bi bi-search" aria-hidden="true"></i>
+            <span class="nav-search-icon"><i class="bi bi-search" aria-hidden="true"></i></span>
             <input class="form-control" type="search" name="q" value="<?= htmlspecialchars($search) ?>" placeholder="Tìm acc Clash of Clans" aria-label="Tìm acc Clash of Clans">
             <?php if ($townhall > 0): ?>
                 <input type="hidden" name="townhall" value="<?= (int) $townhall ?>">
@@ -57,6 +57,7 @@ if ($dbReady) {
 
 <main class="container py-5">
     <section class="glass-panel hero-panel p-4 p-lg-5 mb-4">
+        <img class="hero-banner" src="<?= htmlspecialchars(coc_asset('assets/banner_top.png')) ?>" alt="COC Shop banner">
         <div class="row g-4 align-items-end">
             <div class="col-lg-7">
                 <p class="text-uppercase fw-bold muted-text mb-2">Shop acc Clash of Clans</p>

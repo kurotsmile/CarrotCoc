@@ -40,24 +40,28 @@ body {
 }
 
 .nav-search {
-    position: relative;
+    display: flex;
+    align-items: stretch;
     flex: 1 1 24rem;
     max-width: 34rem;
 }
 
-.nav-search i {
-    position: absolute;
-    top: 50%;
-    left: 1rem;
-    z-index: 2;
-    color: rgba(248, 251, 255, .68);
-    transform: translateY(-50%);
+.nav-search-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 46px;
+    min-height: 44px;
+    color: rgba(248, 251, 255, .78);
+    background: rgba(255, 255, 255, .12);
+    border: 1px solid rgba(255, 255, 255, .3);
+    border-right: 0;
+    border-radius: 8px 0 0 8px;
 }
 
 .nav-search .form-control {
     min-height: 44px;
-    padding-left: 2.75rem;
-    border-radius: 8px;
+    border-radius: 0 8px 8px 0;
 }
 
 .glass-panel,
@@ -68,14 +72,14 @@ body {
 }
 
 .brand-mark {
-    width: 42px;
-    height: 42px;
-    display: grid;
-    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    object-fit: cover;
     border-radius: 8px;
-    background: linear-gradient(135deg, #53e88b, #21a1ff);
-    color: #06131d;
-    font-weight: 900;
+    background: rgba(255, 255, 255, .14);
+    border: 1px solid rgba(255, 255, 255, .25);
+    padding: .15rem;
 }
 
 .hero-panel {
@@ -84,17 +88,16 @@ body {
     overflow: hidden;
 }
 
-.hero-panel::after {
+.hero-banner {
     position: absolute;
     right: clamp(1rem, 4vw, 3rem);
     bottom: -1.25rem;
     z-index: 0;
     width: min(38vw, 460px);
-    aspect-ratio: 16 / 9;
-    content: "";
-    background: url("../banner_top.png") center / contain no-repeat;
+    height: auto;
     filter: drop-shadow(0 26px 40px rgba(0, 0, 0, .28));
     opacity: .74;
+    pointer-events: none;
 }
 
 .hero-panel > * {
@@ -214,17 +217,16 @@ body {
     opacity: .95;
 }
 
-.site-footer::after {
+.footer-banner {
     position: absolute;
     right: clamp(1rem, 5vw, 5rem);
     bottom: 1rem;
     z-index: 0;
     width: min(26vw, 310px);
-    aspect-ratio: 16 / 9;
-    content: "";
-    background: url("../banner_footer.png") center / contain no-repeat;
+    height: auto;
     filter: drop-shadow(0 24px 36px rgba(0, 0, 0, .3));
     opacity: .72;
+    pointer-events: none;
 }
 
 .footer-grid {
@@ -244,8 +246,8 @@ body {
 }
 
 .footer-sponsor img {
-    width: 86px;
-    height: 86px;
+    width: 124px;
+    height: 124px;
     object-fit: contain;
     border-radius: 8px;
     background: rgba(255, 255, 255, .14);
@@ -319,7 +321,7 @@ body {
         max-width: none;
     }
 
-    .hero-panel::after {
+    .hero-banner {
         width: min(68vw, 420px);
         opacity: .42;
     }
@@ -339,11 +341,11 @@ body {
     }
 
     .footer-sponsor img {
-        width: 74px;
-        height: 74px;
+        width: 104px;
+        height: 104px;
     }
 
-    .site-footer::after {
+    .footer-banner {
         width: 72vw;
         opacity: .26;
     }

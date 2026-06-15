@@ -1,4 +1,5 @@
 <footer class="site-footer mt-5">
+    <img class="footer-banner" src="<?= htmlspecialchars(coc_asset('assets/banner_footer.png')) ?>" alt="COC Shop footer banner">
     <div class="container py-5">
         <div class="footer-grid">
             <div>

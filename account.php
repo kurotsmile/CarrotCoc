@@ -36,11 +36,11 @@ $paypalCurrency = $paypalConfig['currency'] ?? 'USD';
 <nav class="navbar navbar-expand-lg navbar-dark glass-nav">
     <div class="container py-2 nav-inner">
         <a class="navbar-brand d-flex align-items-center gap-3 fw-bold" href="index.php">
-            <span class="brand-mark">CC</span>
+            <img class="brand-mark" src="<?= htmlspecialchars(coc_asset('favicon/apple-touch-icon.png')) ?>" alt="COC Shop">
             <span>COC Shop</span>
         </a>
         <form class="nav-search" method="get" action="index.php" role="search">
-            <i class="bi bi-search" aria-hidden="true"></i>
+            <span class="nav-search-icon"><i class="bi bi-search" aria-hidden="true"></i></span>
             <input class="form-control" type="search" name="q" placeholder="Tìm acc Clash of Clans" aria-label="Tìm acc Clash of Clans">
         </form>
     </div>
