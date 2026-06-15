@@ -85,7 +85,6 @@ body {
 .hero-panel {
     position: relative;
     isolation: isolate;
-    overflow: hidden;
 }
 
 .hero-banner {
@@ -96,7 +95,7 @@ body {
     width: min(38vw, 460px);
     height: auto;
     filter: drop-shadow(0 26px 40px rgba(0, 0, 0, .28));
-    opacity: .74;
+    opacity: 1;
     pointer-events: none;
 }
 
