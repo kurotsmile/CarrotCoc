@@ -12,6 +12,17 @@ if (!$account) {
 $data = $account ? coc_decode_json($account['data']) : [];
 $photos = $account ? coc_decode_photos($account['photos']) : [];
 $th = $account ? coc_account_hall($account) : 0;
+$supercellGroups = [
+    'heroes' => ['title' => 'Heroes', 'icon' => 'bi-person-badge'],
+    'units' => ['title' => 'Troops', 'icon' => 'bi-crosshair'],
+    'spells' => ['title' => 'Spells', 'icon' => 'bi-stars'],
+    'equipment' => ['title' => 'Equipment', 'icon' => 'bi-gem'],
+    'buildings' => ['title' => 'Buildings', 'icon' => 'bi-house-gear'],
+    'units2' => ['title' => 'Builder Troops', 'icon' => 'bi-hammer'],
+    'skins' => ['title' => 'Skins', 'icon' => 'bi-palette'],
+    'pets' => ['title' => 'Pets', 'icon' => 'bi-heart'],
+    'obstacles' => ['title' => 'Obstacles', 'icon' => 'bi-tree'],
+];
 $paypalConfig = require __DIR__ . '/config/paypal.php';
 $paypalClientId = $paypalConfig['client_id'] ?? '';
 $paypalCurrency = $paypalConfig['currency'] ?? 'USD';
@@ -30,7 +41,7 @@ $paypalCurrency = $paypalConfig['currency'] ?? 'USD';
     <meta name="theme-color" content="#071625">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css')) ?>" rel="stylesheet">
+    <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css?v7')) ?>" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark glass-nav">
@@ -98,9 +109,77 @@ $paypalCurrency = $paypalConfig['currency'] ?? 'USD';
             </div>
         </div>
 
-        <section class="glass-panel p-4 mt-4">
-            <h2 class="h4 mb-3">Dữ liệu Supercell</h2>
-            <pre class="mb-0 text-white small"><code><?= htmlspecialchars(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)) ?></code></pre>
+        <section class="supercell-section glass-panel p-4 mt-4">
+            <div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mb-4">
+                <div>
+                    <p class="text-uppercase fw-bold muted-text mb-2">Account profile</p>
+                    <h2 class="h4 mb-0">Dữ liệu Supercell</h2>
+                </div>
+                <span class="supercell-total"><i class="bi bi-grid-3x3-gap" aria-hidden="true"></i><?= array_sum(coc_summary_counts($data)) ?> mục chính</span>
+            </div>
+
+            <div class="supercell-overview mb-4">
+                <div class="supercell-metric">
+                    <i class="bi bi-bank" aria-hidden="true"></i>
+                    <span>Town Hall</span>
+                    <strong><?= $th ?: 'N/A' ?></strong>
+                </div>
+                <?php foreach (coc_summary_counts($data) as $label => $count): ?>
+                    <div class="supercell-metric">
+                        <i class="bi bi-layers" aria-hidden="true"></i>
+                        <span><?= htmlspecialchars($label) ?></span>
+                        <strong><?= (int) $count ?></strong>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <div class="supercell-grid">
+                <?php foreach ($supercellGroups as $key => $group): ?>
+                    <?php
+                    $items = $data[$key] ?? [];
+                    if (!is_array($items) || !$items) {
+                        continue;
+                    }
+                    ?>
+                    <article class="supercell-card">
+                        <header class="supercell-card-head">
+                            <span class="supercell-icon"><i class="bi <?= htmlspecialchars($group['icon']) ?>" aria-hidden="true"></i></span>
+                            <span>
+                                <span class="supercell-kicker"><?= htmlspecialchars($key) ?></span>
+                                <strong><?= htmlspecialchars($group['title']) ?></strong>
+                            </span>
+                            <span class="supercell-count"><?= count($items) ?></span>
+                        </header>
+                        <div class="supercell-items">
+                            <?php foreach ($items as $item): ?>
+                                <?php if (!is_array($item)) continue; ?>
+                                <?php
+                                $itemName = (string) ($item['name'] ?? $item['data'] ?? $item['id'] ?? 'Item');
+                                $itemLevel = $item['lvl'] ?? $item['level'] ?? null;
+                                ?>
+                                <div class="supercell-item">
+                                    <div class="supercell-item-main">
+                                        <span><?= htmlspecialchars($itemName) ?></span>
+                                        <?php if ($itemLevel !== null): ?>
+                                            <strong>Lv <?= htmlspecialchars((string) $itemLevel) ?></strong>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="supercell-chips">
+                                        <?php foreach ($item as $attribute => $value): ?>
+                                            <?php if (in_array($attribute, ['name', 'data', 'id', 'lvl', 'level'], true) || is_array($value)) continue; ?>
+                                            <span><?= htmlspecialchars((string) $attribute) ?>: <?= htmlspecialchars((string) $value) ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+
+            <?php if (!$data): ?>
+                <div class="text-center muted-text py-4">Không có dữ liệu Supercell để hiển thị.</div>
+            <?php endif; ?>
         </section>
     <?php endif; ?>
 </main>

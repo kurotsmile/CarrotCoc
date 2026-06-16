@@ -263,6 +263,152 @@ body {
     border: 1px solid rgba(255, 255, 255, .16);
 }
 
+.supercell-section {
+    overflow: hidden;
+}
+
+.supercell-total,
+.supercell-count {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    min-height: 32px;
+    padding: .25rem .75rem;
+    color: #a7ffc9;
+    background: rgba(126, 255, 180, .13);
+    border: 1px solid rgba(126, 255, 180, .28);
+    border-radius: 999px;
+    font-size: .85rem;
+    font-weight: 800;
+}
+
+.supercell-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+    gap: .75rem;
+}
+
+.supercell-metric,
+.supercell-card,
+.supercell-item {
+    background: rgba(255, 255, 255, .1);
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 8px;
+}
+
+.supercell-metric {
+    display: grid;
+    gap: .35rem;
+    padding: .85rem;
+}
+
+.supercell-metric i {
+    color: #89ffb7;
+    font-size: 1.2rem;
+}
+
+.supercell-metric span,
+.supercell-kicker {
+    color: var(--muted);
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.supercell-metric strong {
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.supercell-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 1rem;
+}
+
+.supercell-card {
+    overflow: hidden;
+}
+
+.supercell-card-head {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: .8rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, .08);
+    border-bottom: 1px solid rgba(255, 255, 255, .14);
+}
+
+.supercell-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    color: #06131d;
+    background: #89ffb7;
+    border-radius: 8px;
+    box-shadow: 0 14px 28px rgba(137, 255, 183, .16);
+}
+
+.supercell-icon i {
+    font-size: 1.15rem;
+}
+
+.supercell-card-head strong {
+    display: block;
+    font-size: 1rem;
+}
+
+.supercell-items {
+    display: grid;
+    gap: .65rem;
+    max-height: 28rem;
+    overflow: auto;
+    padding: 1rem;
+}
+
+.supercell-item {
+    padding: .8rem;
+}
+
+.supercell-item-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    font-weight: 800;
+}
+
+.supercell-item-main span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.supercell-item-main strong {
+    flex: 0 0 auto;
+    color: #a7ffc9;
+    font-size: .86rem;
+}
+
+.supercell-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin-top: .55rem;
+}
+
+.supercell-chips span {
+    padding: .2rem .45rem;
+    color: var(--muted);
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 999px;
+    font-size: .76rem;
+}
+
 .secret-box {
     display: none;
 }
