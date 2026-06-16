@@ -5,6 +5,10 @@ require __DIR__ . '/includes/coc_helpers.php';
 $accounts = [];
 $townhall = isset($_GET['townhall']) ? (int) $_GET['townhall'] : 0;
 $search = trim((string) ($_GET['q'] ?? ''));
+$currentPage = max(1, (int) ($_GET['page_no'] ?? 1));
+$accountsPerPage = 12;
+$totalAccounts = 0;
+$totalPages = 1;
 $page = basename((string) ($_GET['page'] ?? ''));
 $staticPages = [
     'Introduce.php' => ['title' => 'Introduce', 'file' => __DIR__ . '/page/Introduce.php'],
@@ -17,17 +21,52 @@ $dbReady = $pdo instanceof PDO;
 
 if (!$staticPage && $dbReady) {
     try {
-        $accounts = $pdo->query('SELECT id, name, data, avatar, price FROM coc ORDER BY id DESC')->fetchAll();
+        $where = [];
+        $params = [];
+
         if ($search !== '') {
-            $accounts = array_values(array_filter($accounts, fn($account) => stripos($account['name'], $search) !== false));
+            $where[] = 'name LIKE ?';
+            $params[] = '%' . $search . '%';
         }
+
         if ($townhall > 0) {
-            $accounts = array_values(array_filter($accounts, fn($account) => coc_townhall_level(coc_decode_json($account['data'])) === $townhall));
+            $where[] = 'hall = ?';
+            $params[] = $townhall;
         }
+
+        $whereSql = $where ? ' WHERE ' . implode(' AND ', $where) : '';
+
+        $countStmt = $pdo->prepare('SELECT COUNT(*) FROM coc' . $whereSql);
+        $countStmt->execute($params);
+        $totalAccounts = (int) $countStmt->fetchColumn();
+        $totalPages = max(1, (int) ceil($totalAccounts / $accountsPerPage));
+        $currentPage = min($currentPage, $totalPages);
+        $offset = ($currentPage - 1) * $accountsPerPage;
+
+        $stmt = $pdo->prepare('SELECT id, name, hall, data, avatar, price FROM coc' . $whereSql . ' ORDER BY id DESC LIMIT ? OFFSET ?');
+        $stmtParams = array_merge($params, [$accountsPerPage, $offset]);
+        foreach ($stmtParams as $index => $value) {
+            $stmt->bindValue($index + 1, $value, is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+        }
+        $stmt->execute();
+        $accounts = $stmt->fetchAll();
     } catch (Throwable $e) {
         $dbReady = false;
         $db_error = $e->getMessage();
     }
+}
+
+function coc_page_url(int $page, string $search, int $townhall): string
+{
+    $params = ['page_no' => $page];
+    if ($search !== '') {
+        $params['q'] = $search;
+    }
+    if ($townhall > 0) {
+        $params['townhall'] = $townhall;
+    }
+
+    return 'index.php?' . http_build_query($params);
 }
 ?>
 <!doctype html>
@@ -107,8 +146,7 @@ if (!$staticPage && $dbReady) {
     <?php else: ?>
         <div class="row g-4">
             <?php foreach ($accounts as $account):
-                $data = coc_decode_json($account['data']);
-                $th = coc_townhall_level($data);
+                $th = coc_account_hall($account);
                 ?>
                 <div class="col-md-6 col-xl-4">
                     <a class="account-card d-block h-100 text-decoration-none text-white" href="account.php?id=<?= (int) $account['id'] ?>">
@@ -124,6 +162,27 @@ if (!$staticPage && $dbReady) {
                 </div>
             <?php endforeach; ?>
         </div>
+        <?php if ($totalPages > 1): ?>
+            <nav class="mt-5" aria-label="Phân trang tài khoản">
+                <ul class="pagination coc-pagination justify-content-center flex-wrap gap-2">
+                    <li class="page-item <?= $currentPage <= 1 ? 'disabled' : '' ?>">
+                        <a class="page-link" href="<?= htmlspecialchars(coc_page_url(max(1, $currentPage - 1), $search, $townhall)) ?>" aria-label="Trang trước">
+                            <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <li class="page-item <?= $currentPage === $i ? 'active' : '' ?>">
+                            <a class="page-link" href="<?= htmlspecialchars(coc_page_url($i, $search, $townhall)) ?>"><?= $i ?></a>
+                        </li>
+                    <?php endfor; ?>
+                    <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
+                        <a class="page-link" href="<?= htmlspecialchars(coc_page_url(min($totalPages, $currentPage + 1), $search, $townhall)) ?>" aria-label="Trang sau">
+                            <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        <?php endif; ?>
     <?php endif; ?>
     <?php endif; ?>
 </main>

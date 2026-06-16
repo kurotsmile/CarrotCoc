@@ -11,7 +11,7 @@ if (!$account) {
 
 $data = $account ? coc_decode_json($account['data']) : [];
 $photos = $account ? coc_decode_photos($account['photos']) : [];
-$th = coc_townhall_level($data);
+$th = $account ? coc_account_hall($account) : 0;
 $paypalConfig = require __DIR__ . '/config/paypal.php';
 $paypalClientId = $paypalConfig['client_id'] ?? '';
 $paypalCurrency = $paypalConfig['currency'] ?? 'USD';

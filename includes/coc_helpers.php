@@ -48,6 +48,12 @@ function coc_townhall_level(array $data): int
     return $levels ? max($levels) : 0;
 }
 
+function coc_account_hall(array $account): int
+{
+    $hall = (int) ($account['hall'] ?? 0);
+    return $hall > 0 ? $hall : coc_townhall_level(coc_decode_json($account['data'] ?? null));
+}
+
 function coc_summary_counts(array $data): array
 {
     return [
@@ -71,4 +77,3 @@ function coc_fetch_account(PDO $pdo, int $id): ?array
     $row = $stmt->fetch();
     return $row ?: null;
 }
-
