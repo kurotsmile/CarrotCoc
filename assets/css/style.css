@@ -103,8 +103,8 @@ body {
 }
 
 .hero-logo {
-    position: absolute;
-    top: clamp(-2.2rem, -4vw, -1.15rem);
+    position: absolute !important;
+    top: clamp(-3.2rem, -4vw, -1.15rem);
     left: clamp(1.2rem, 4vw, 3rem);
     z-index: 2;
     width: clamp(128px, 18vw, 214px);
