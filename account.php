@@ -10,7 +10,7 @@ if (!$account) {
 }
 
 $data = $account ? coc_decode_json($account['data']) : [];
-$photos = $account ? coc_decode_photos($account['photos']) : [];
+$photos = $account ? array_values(array_filter(coc_decode_photos($account['photos']), fn($photo) => filter_var($photo, FILTER_VALIDATE_URL))) : [];
 $th = $account ? coc_account_hall($account) : 0;
 $supercellGroups = [
     'heroes' => ['title' => 'Heroes', 'icon' => 'bi-person-badge'],
@@ -41,7 +41,7 @@ $paypalCurrency = $paypalConfig['currency'] ?? 'USD';
     <meta name="theme-color" content="#071625">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css?v7')) ?>" rel="stylesheet">
+    <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css?v8')) ?>" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark glass-nav">
@@ -70,10 +70,13 @@ $paypalCurrency = $paypalConfig['currency'] ?? 'USD';
                     <img class="w-100 rounded-2" src="<?= htmlspecialchars($account['avatar']) ?>" alt="<?= htmlspecialchars($account['name']) ?>">
                 </div>
                 <?php if ($photos): ?>
-                    <div class="row g-3 mt-1 photo-strip">
+                    <div class="photo-strip mt-3">
+                        <h2 class="h6 fw-bold mb-3">Ảnh chi tiết</h2>
+                        <div class="row g-3">
                         <?php foreach ($photos as $photo): ?>
                             <div class="col-sm-6"><img src="<?= htmlspecialchars($photo) ?>" alt="Ảnh chi tiết"></div>
                         <?php endforeach; ?>
+                        </div>
                     </div>
                 <?php endif; ?>
             </div>

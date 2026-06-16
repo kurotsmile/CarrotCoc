@@ -367,7 +367,27 @@ body {
     gap: .65rem;
     max-height: 28rem;
     overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(137, 255, 183, .5) rgba(255, 255, 255, .08);
     padding: 1rem;
+}
+
+.supercell-items::-webkit-scrollbar {
+    width: 6px;
+}
+
+.supercell-items::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, .08);
+    border-radius: 999px;
+}
+
+.supercell-items::-webkit-scrollbar-thumb {
+    background: rgba(137, 255, 183, .5);
+    border-radius: 999px;
+}
+
+.supercell-items::-webkit-scrollbar-thumb:hover {
+    background: rgba(137, 255, 183, .75);
 }
 
 .supercell-item {
@@ -498,7 +518,7 @@ body {
     height: 124px;
     object-fit: contain;
     border-radius: 8px;
-    background: rgba(255, 255, 255, .14);
+    background: #fff;
     border: 1px solid rgba(255, 255, 255, .2);
     padding: .35rem;
 }
