@@ -5,9 +5,17 @@ require __DIR__ . '/includes/coc_helpers.php';
 $accounts = [];
 $townhall = isset($_GET['townhall']) ? (int) $_GET['townhall'] : 0;
 $search = trim((string) ($_GET['q'] ?? ''));
+$page = basename((string) ($_GET['page'] ?? ''));
+$staticPages = [
+    'Introduce.php' => ['title' => 'Introduce', 'file' => __DIR__ . '/page/Introduce.php'],
+    'Policy.php' => ['title' => 'Policy', 'file' => __DIR__ . '/page/Policy.php'],
+    'Cookie.php' => ['title' => 'Cookie', 'file' => __DIR__ . '/page/Cookie.php'],
+    'Support.php' => ['title' => 'Support', 'file' => __DIR__ . '/page/Support.php'],
+];
+$staticPage = $staticPages[$page] ?? null;
 $dbReady = $pdo instanceof PDO;
 
-if ($dbReady) {
+if (!$staticPage && $dbReady) {
     try {
         $accounts = $pdo->query('SELECT id, name, data, avatar, price FROM coc ORDER BY id DESC')->fetchAll();
         if ($search !== '') {
@@ -27,7 +35,7 @@ if ($dbReady) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>COC Shop - Shop Acc Clash of Clans</title>
+    <title><?= $staticPage ? htmlspecialchars($staticPage['title']) . ' - ' : '' ?>COC Shop - Shop Acc Clash of Clans</title>
     <link rel="apple-touch-icon" sizes="180x180" href="<?= htmlspecialchars(coc_asset('favicon/apple-touch-icon.png')) ?>">
     <link rel="icon" type="image/png" sizes="32x32" href="<?= htmlspecialchars(coc_asset('favicon/favicon-32x32.png')) ?>">
     <link rel="icon" type="image/png" sizes="16x16" href="<?= htmlspecialchars(coc_asset('favicon/favicon-16x16.png')) ?>">
@@ -36,7 +44,7 @@ if ($dbReady) {
     <meta name="theme-color" content="#071625">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css?v3')) ?>" rel="stylesheet">
+    <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css?v4')) ?>" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark glass-nav">
@@ -56,12 +64,15 @@ if ($dbReady) {
 </nav>
 
 <main class="container py-5">
+    <?php if ($staticPage): ?>
+        <?php require $staticPage['file']; ?>
+    <?php else: ?>
     <section class="glass-panel hero-panel p-4 p-lg-5 mb-4">
         <img class="hero-banner" src="<?= htmlspecialchars(coc_asset('assets/banner_top.png')) ?>" alt="COC Shop banner">
         <div class="row g-4 align-items-end">
             <div class="col-lg-7">
                 <p class="text-uppercase fw-bold muted-text mb-2">Shop acc Clash of Clans</p>
-                <h1 class="display-5 fw-black mb-3">Chọn acc phù hợp, thanh toán PayPal, nhận login sau khi capture thành công.</h1>
+                <h1 class="hero-title mb-3">Chúng tôi cung cấp nhiều tài Game khoản chất lượng , giao dịch uy tín , Hy vọng bạn sẽ hài lòng với việc mua hàng của mình. Cảm ơn bạn đã là khách hàng thân thiết của shop chúng tôi !</h1>
                 <p class="muted-text mb-0">Danh sách đọc từ bảng <code>coc</code>, cấp nhà chính được suy ra từ JSON Supercell trong trường <code>data</code>.</p>
             </div>
             <div class="col-lg-5">
@@ -113,6 +124,7 @@ if ($dbReady) {
                 </div>
             <?php endforeach; ?>
         </div>
+    <?php endif; ?>
     <?php endif; ?>
 </main>
 <?php require __DIR__ . '/includes/footer.php'; ?>

@@ -17,10 +17,10 @@
             <div>
                 <h2 class="footer-title">Trang</h2>
                 <ul class="footer-links">
-                    <li><a href="index.php"><i class="bi bi-info-circle" aria-hidden="true"></i>Giới thiệu</a></li>
-                    <li><a href="index.php"><i class="bi bi-shield-check" aria-hidden="true"></i>Chính sách</a></li>
-                    <li><a href="index.php"><i class="bi bi-cookie" aria-hidden="true"></i>Cookie</a></li>
-                    <li><a href="index.php"><i class="bi bi-life-preserver" aria-hidden="true"></i>Hỗ trợ</a></li>
+                    <li><a href="index.php?page=Introduce.php"><i class="bi bi-info-circle" aria-hidden="true"></i>Giới thiệu</a></li>
+                    <li><a href="index.php?page=Policy.php"><i class="bi bi-shield-check" aria-hidden="true"></i>Chính sách</a></li>
+                    <li><a href="index.php?page=Cookie.php"><i class="bi bi-cookie" aria-hidden="true"></i>Cookie</a></li>
+                    <li><a href="index.php?page=Support.php"><i class="bi bi-life-preserver" aria-hidden="true"></i>Hỗ trợ</a></li>
                 </ul>
             </div>
 
