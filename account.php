@@ -26,13 +26,36 @@ $supercellGroups = [
 $paypalConfig = require __DIR__ . '/config/paypal.php';
 $paypalClientId = $paypalConfig['client_id'] ?? '';
 $paypalCurrency = $paypalConfig['currency'] ?? 'USD';
+$siteUrl = 'https://coc.carrot28.com';
+$seoTitle = $account
+    ? $account['name'] . ' - Mua Acc COC Town Hall ' . ($th ?: 'N/A') . ' Giá Rẻ'
+    : 'Không tìm thấy acc - COC Shop';
+$seoDescription = $account
+    ? 'Mua tài khoản Clash of Clans ' . $account['name'] . ', Town Hall ' . ($th ?: 'N/A') . ', giá ' . coc_money($account['price']) . '. Thanh toán PayPal và nhận login nhanh sau khi thanh toán thành công.'
+    : 'Tài khoản Clash of Clans không tồn tại hoặc đã được gỡ khỏi COC Shop.';
+$canonicalUrl = $account ? $siteUrl . '/account.php?id=' . (int) $account['id'] : $siteUrl . '/';
+$seoImage = $account && $account['avatar'] ? $account['avatar'] : $siteUrl . '/assets/coc_logo.png';
 ?>
 <!doctype html>
 <html lang="vi">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= $account ? htmlspecialchars($account['name']) : 'Không tìm thấy acc' ?> - COC Shop</title>
+    <title><?= htmlspecialchars($seoTitle) ?></title>
+    <meta name="description" content="<?= htmlspecialchars($seoDescription) ?>">
+    <meta name="keywords" content="acc coc giá rẻ, mua tài khoản clash of clan, mua acc clash of clans, acc town hall <?= htmlspecialchars((string) $th) ?>, shop acc coc uy tín">
+    <meta name="robots" content="<?= $account ? 'index, follow, max-image-preview:large' : 'noindex, follow' ?>">
+    <link rel="canonical" href="<?= htmlspecialchars($canonicalUrl) ?>">
+    <meta property="og:type" content="<?= $account ? 'product' : 'website' ?>">
+    <meta property="og:site_name" content="COC Shop">
+    <meta property="og:title" content="<?= htmlspecialchars($seoTitle) ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($seoDescription) ?>">
+    <meta property="og:url" content="<?= htmlspecialchars($canonicalUrl) ?>">
+    <meta property="og:image" content="<?= htmlspecialchars($seoImage) ?>">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?= htmlspecialchars($seoTitle) ?>">
+    <meta name="twitter:description" content="<?= htmlspecialchars($seoDescription) ?>">
+    <meta name="twitter:image" content="<?= htmlspecialchars($seoImage) ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="<?= htmlspecialchars(coc_asset('favicon/apple-touch-icon.png')) ?>">
     <link rel="icon" type="image/png" sizes="32x32" href="<?= htmlspecialchars(coc_asset('favicon/favicon-32x32.png')) ?>">
     <link rel="icon" type="image/png" sizes="16x16" href="<?= htmlspecialchars(coc_asset('favicon/favicon-16x16.png')) ?>">
@@ -42,6 +65,28 @@ $paypalCurrency = $paypalConfig['currency'] ?? 'USD';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css?v8')) ?>" rel="stylesheet">
+    <?php if ($account): ?>
+    <script type="application/ld+json">
+    <?= json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'Product',
+        'name' => $account['name'],
+        'description' => $seoDescription,
+        'image' => [$seoImage],
+        'brand' => [
+            '@type' => 'Brand',
+            'name' => 'Clash of Clans',
+        ],
+        'offers' => [
+            '@type' => 'Offer',
+            'url' => $canonicalUrl,
+            'priceCurrency' => $paypalCurrency,
+            'price' => number_format((float) $account['price'], 2, '.', ''),
+            'availability' => 'https://schema.org/InStock',
+        ],
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?>
+    </script>
+    <?php endif; ?>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark glass-nav">

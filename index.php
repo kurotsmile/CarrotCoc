@@ -18,6 +18,11 @@ $staticPages = [
 ];
 $staticPage = $staticPages[$page] ?? null;
 $dbReady = $pdo instanceof PDO;
+$siteUrl = 'https://coc.carrot28.com';
+$seoTitle = 'COC Shop - Mua Acc Clash of Clans Giá Rẻ, Uy Tín';
+$seoDescription = 'Mua tài khoản Clash of Clans, acc COC giá rẻ, nhiều Town Hall, giao dịch uy tín, thanh toán PayPal và nhận login nhanh sau khi thanh toán thành công.';
+$seoKeywords = 'acc coc giá rẻ, mua tài khoản clash of clan, mua acc clash of clans, shop acc coc, tài khoản clash of clans, acc clash of clan uy tín, mua acc coc paypal';
+$canonicalUrl = $siteUrl . '/';
 
 if (!$staticPage && $dbReady) {
     try {
@@ -55,13 +60,37 @@ if (!$staticPage && $dbReady) {
         $db_error = $e->getMessage();
     }
 }
+
+if ($staticPage) {
+    $seoTitle = $staticPage['title'] . ' - COC Shop';
+    $seoDescription = 'Thông tin ' . strtolower($staticPage['title']) . ' của COC Shop, nơi mua tài khoản Clash of Clans uy tín, nhanh chóng và an toàn.';
+    $canonicalUrl = $siteUrl . '/index.php?page=' . rawurlencode($page);
+} elseif ($townhall > 0) {
+    $seoTitle = 'Mua Acc COC Town Hall ' . $townhall . ' Giá Rẻ - COC Shop';
+    $seoDescription = 'Danh sách tài khoản Clash of Clans Town Hall ' . $townhall . ' giá tốt, thông tin rõ ràng, thanh toán PayPal và nhận login nhanh.';
+    $canonicalUrl = $siteUrl . '/index.php?townhall=' . $townhall;
+}
 ?>
 <!doctype html>
 <html lang="vi">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= $staticPage ? htmlspecialchars($staticPage['title']) . ' - ' : '' ?>COC Shop - Shop Acc Clash of Clans</title>
+    <title><?= htmlspecialchars($seoTitle) ?></title>
+    <meta name="description" content="<?= htmlspecialchars($seoDescription) ?>">
+    <meta name="keywords" content="<?= htmlspecialchars($seoKeywords) ?>">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="<?= htmlspecialchars($canonicalUrl) ?>">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="COC Shop">
+    <meta property="og:title" content="<?= htmlspecialchars($seoTitle) ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($seoDescription) ?>">
+    <meta property="og:url" content="<?= htmlspecialchars($canonicalUrl) ?>">
+    <meta property="og:image" content="<?= htmlspecialchars($siteUrl . '/assets/coc_logo.png') ?>">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?= htmlspecialchars($seoTitle) ?>">
+    <meta name="twitter:description" content="<?= htmlspecialchars($seoDescription) ?>">
+    <meta name="twitter:image" content="<?= htmlspecialchars($siteUrl . '/assets/coc_logo.png') ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="<?= htmlspecialchars(coc_asset('favicon/apple-touch-icon.png')) ?>">
     <link rel="icon" type="image/png" sizes="32x32" href="<?= htmlspecialchars(coc_asset('favicon/favicon-32x32.png')) ?>">
     <link rel="icon" type="image/png" sizes="16x16" href="<?= htmlspecialchars(coc_asset('favicon/favicon-16x16.png')) ?>">
@@ -71,6 +100,21 @@ if (!$staticPage && $dbReady) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css?v8')) ?>" rel="stylesheet">
+    <script type="application/ld+json">
+    <?= json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'Store',
+        'name' => 'COC Shop',
+        'url' => $siteUrl . '/',
+        'description' => $seoDescription,
+        'image' => $siteUrl . '/assets/coc_logo.png',
+        'paymentAccepted' => 'PayPal',
+        'sameAs' => [
+            'https://tiktok.com/@kurotsmilethanh',
+            'https://linkedin.com/in/tranthienthanh',
+        ],
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?>
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark glass-nav">
