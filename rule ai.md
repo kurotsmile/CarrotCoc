@@ -1,0 +1,2 @@
+- nếu sửa code liên quan tới style css thì nhớ thay đổi version viết tắt chữ v ở index htmlspecialchars(coc_asset('assets/css/style.css?v4')) 
+- hạng chế sinh hàm con chỉ sử dụng 1 lần mà gộp vào xử lý hàm chính

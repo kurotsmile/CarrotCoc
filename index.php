@@ -55,19 +55,6 @@ if (!$staticPage && $dbReady) {
         $db_error = $e->getMessage();
     }
 }
-
-function coc_page_url(int $page, string $search, int $townhall): string
-{
-    $params = ['page_no' => $page];
-    if ($search !== '') {
-        $params['q'] = $search;
-    }
-    if ($townhall > 0) {
-        $params['townhall'] = $townhall;
-    }
-
-    return 'index.php?' . http_build_query($params);
-}
 ?>
 <!doctype html>
 <html lang="vi">
@@ -83,7 +70,7 @@ function coc_page_url(int $page, string $search, int $townhall): string
     <meta name="theme-color" content="#071625">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css?v4')) ?>" rel="stylesheet">
+    <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css?v5')) ?>" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark glass-nav">
@@ -107,6 +94,7 @@ function coc_page_url(int $page, string $search, int $townhall): string
         <?php require $staticPage['file']; ?>
     <?php else: ?>
     <section class="glass-panel hero-panel p-4 p-lg-5 mb-4">
+        <img class="hero-logo" src="<?= htmlspecialchars(coc_asset('assets/coc_logo.png')) ?>" alt="Clash of Clans">
         <img class="hero-banner" src="<?= htmlspecialchars(coc_asset('assets/banner_top.png')) ?>" alt="COC Shop banner">
         <div class="row g-4 align-items-end">
             <div class="col-lg-7">
@@ -123,7 +111,7 @@ function coc_page_url(int $page, string $search, int $townhall): string
                         <label class="form-label" for="townhall">Lọc cấp nhà chính</label>
                         <select class="form-select" id="townhall" name="townhall">
                             <option value="0">Tất cả Town Hall</option>
-                            <?php for ($i = 1; $i <= 17; $i++): ?>
+                            <?php for ($i = 1; $i <= 20; $i++): ?>
                                 <option value="<?= $i ?>" <?= $townhall === $i ? 'selected' : '' ?>>Town Hall <?= $i ?></option>
                             <?php endfor; ?>
                         </select>
@@ -164,19 +152,40 @@ function coc_page_url(int $page, string $search, int $townhall): string
         </div>
         <?php if ($totalPages > 1): ?>
             <nav class="mt-5" aria-label="Phân trang tài khoản">
-                <ul class="pagination coc-pagination justify-content-center flex-wrap gap-2">
+                <ul class="pagination coc-pagination justify-content-center flex-wrap">
+                    <?php
+                    $prevPageParams = ['page_no' => max(1, $currentPage - 1)];
+                    $nextPageParams = ['page_no' => min($totalPages, $currentPage + 1)];
+                    if ($search !== '') {
+                        $prevPageParams['q'] = $search;
+                        $nextPageParams['q'] = $search;
+                    }
+                    if ($townhall > 0) {
+                        $prevPageParams['townhall'] = $townhall;
+                        $nextPageParams['townhall'] = $townhall;
+                    }
+                    ?>
                     <li class="page-item <?= $currentPage <= 1 ? 'disabled' : '' ?>">
-                        <a class="page-link" href="<?= htmlspecialchars(coc_page_url(max(1, $currentPage - 1), $search, $townhall)) ?>" aria-label="Trang trước">
+                        <a class="page-link" href="<?= htmlspecialchars('index.php?' . http_build_query($prevPageParams)) ?>" aria-label="Trang trước">
                             <i class="bi bi-chevron-left" aria-hidden="true"></i>
                         </a>
                     </li>
                     <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <?php
+                        $pageParams = ['page_no' => $i];
+                        if ($search !== '') {
+                            $pageParams['q'] = $search;
+                        }
+                        if ($townhall > 0) {
+                            $pageParams['townhall'] = $townhall;
+                        }
+                        ?>
                         <li class="page-item <?= $currentPage === $i ? 'active' : '' ?>">
-                            <a class="page-link" href="<?= htmlspecialchars(coc_page_url($i, $search, $townhall)) ?>"><?= $i ?></a>
+                            <a class="page-link" href="<?= htmlspecialchars('index.php?' . http_build_query($pageParams)) ?>"><?= $i ?></a>
                         </li>
                     <?php endfor; ?>
                     <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
-                        <a class="page-link" href="<?= htmlspecialchars(coc_page_url(min($totalPages, $currentPage + 1), $search, $townhall)) ?>" aria-label="Trang sau">
+                        <a class="page-link" href="<?= htmlspecialchars('index.php?' . http_build_query($nextPageParams)) ?>" aria-label="Trang sau">
                             <i class="bi bi-chevron-right" aria-hidden="true"></i>
                         </a>
                     </li>
