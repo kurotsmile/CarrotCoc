@@ -72,8 +72,8 @@ if (!$staticPage && $dbReady) {
         <div class="row g-4 align-items-end">
             <div class="col-lg-7">
                 <p class="text-uppercase fw-bold muted-text mb-2">Shop acc Clash of Clans</p>
-                <h1 class="hero-title mb-3">Chúng tôi cung cấp nhiều tài Game khoản chất lượng , giao dịch uy tín , Hy vọng bạn sẽ hài lòng với việc mua hàng của mình. Cảm ơn bạn đã là khách hàng thân thiết của shop chúng tôi !</h1>
-                <p class="muted-text mb-0">Danh sách đọc từ bảng <code>coc</code>, cấp nhà chính được suy ra từ JSON Supercell trong trường <code>data</code>.</p>
+                <h1 class="hero-title mb-3">Chúng tôi cung cấp nhiều tài Game khoản chất lượng , giao dịch uy tín , Hy vọng bạn sẽ hài lòng với việc mua hàng của mình.</h1>
+                <p class="muted-text mb-0"><code>Cảm ơn</code> bạn đã là khách hàng thân thiết của <code>shop</code> chúng tôi !.</p>
             </div>
             <div class="col-lg-5">
                 <form class="row g-2 justify-content-lg-end" method="get">
