@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://coc.carrot28.com/sitemap.php
-Sitemap: https://coc.carrot28.com/sitemap.xml

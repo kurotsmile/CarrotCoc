@@ -64,7 +64,7 @@ $seoImage = $account && $account['avatar'] ? $account['avatar'] : $siteUrl . '/a
     <meta name="theme-color" content="#071625">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css?v8')) ?>" rel="stylesheet">
+    <link href="<?= htmlspecialchars(coc_asset('assets/css/style.css?v9')) ?>" rel="stylesheet">
     <?php if ($account): ?>
     <script type="application/ld+json">
     <?= json_encode([
@@ -204,10 +204,33 @@ $seoImage = $account && $account['avatar'] ? $account['avatar'] : $siteUrl . '/a
                                 <?php
                                 $itemName = (string) ($item['name'] ?? $item['data'] ?? $item['id'] ?? 'Item');
                                 $itemLevel = $item['lvl'] ?? $item['level'] ?? null;
+                                $objectId = (string) ($item['data'] ?? $item['id'] ?? '');
+                                $objectImage = '';
+                                if ($objectId !== '') {
+                                    $objectImageCandidates = [
+                                        'assets/objects/' . $key . '/' . $objectId . '.png',
+                                        'assets/objects/' . $key . '/' . $objectId . '.webp',
+                                        'assets/objects/' . $key . '/' . $objectId . '.jpg',
+                                        'assets/objects/' . $objectId . '.png',
+                                        'assets/objects/' . $objectId . '.webp',
+                                        'assets/objects/' . $objectId . '.jpg',
+                                    ];
+                                    foreach ($objectImageCandidates as $candidate) {
+                                        if (is_file(__DIR__ . '/' . $candidate)) {
+                                            $objectImage = $candidate;
+                                            break;
+                                        }
+                                    }
+                                }
                                 ?>
                                 <div class="supercell-item">
                                     <div class="supercell-item-main">
-                                        <span><?= htmlspecialchars($itemName) ?></span>
+                                        <span class="supercell-object">
+                                            <?php if ($objectImage): ?>
+                                                <img src="<?= htmlspecialchars(coc_asset($objectImage)) ?>" alt="<?= htmlspecialchars($itemName) ?>">
+                                            <?php endif; ?>
+                                            <span><?= htmlspecialchars($itemName) ?></span>
+                                        </span>
                                         <?php if ($itemLevel !== null): ?>
                                             <strong>Lv <?= htmlspecialchars((string) $itemLevel) ?></strong>
                                         <?php endif; ?>
