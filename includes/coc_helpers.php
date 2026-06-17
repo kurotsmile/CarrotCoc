@@ -26,12 +26,12 @@ function coc_decode_photos(?string $photos): array
         return [];
     }
 
-    return array_values(array_filter(array_map('trim', preg_split('/\R+/', $photos))));
+    return array_values(array_filter(array_map('trim', preg_split('/[\r\n,]+/', $photos))));
 }
 
 function coc_photos_to_json(string $photos): string
 {
-    $items = array_values(array_filter(array_map('trim', preg_split('/\R+/', $photos))));
+    $items = array_values(array_filter(array_map('trim', preg_split('/[\r\n,]+/', $photos))));
     return json_encode($items, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 }
 
