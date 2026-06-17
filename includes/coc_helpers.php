@@ -19,20 +19,25 @@ function coc_decode_photos(?string $photos): array
 {
     $decoded = coc_decode_json($photos);
     if ($decoded) {
-        return array_values(array_filter(array_map('trim', $decoded)));
+        return array_values(array_filter(array_map('coc_normalize_photo_url', $decoded)));
     }
 
     if (!$photos) {
         return [];
     }
 
-    return array_values(array_filter(array_map('trim', preg_split('/[\r\n,]+/', $photos))));
+    return array_values(array_filter(array_map('coc_normalize_photo_url', preg_split('/[\r\n,]+/', $photos))));
 }
 
 function coc_photos_to_json(string $photos): string
 {
-    $items = array_values(array_filter(array_map('trim', preg_split('/[\r\n,]+/', $photos))));
+    $items = array_values(array_filter(array_map('coc_normalize_photo_url', preg_split('/[\r\n,]+/', $photos))));
     return json_encode($items, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+}
+
+function coc_normalize_photo_url($photo): string
+{
+    return trim((string) $photo, " \t\n\r\0\x0B,");
 }
 
 function coc_townhall_level(array $data): int
