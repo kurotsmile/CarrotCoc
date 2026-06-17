@@ -36,15 +36,21 @@ $seoDescription = $account
 $canonicalUrl = $account ? $siteUrl . '/account.php?id=' . (int) $account['id'] : $siteUrl . '/';
 $seoImage = $account && $account['avatar'] ? $account['avatar'] : $siteUrl . '/assets/coc_logo.png';
 
-function coc_timer_timestamp($value): ?int
+function coc_timer_deadline($value, ?string $updatedAt): ?int
 {
+    $updatedTimestamp = $updatedAt ? strtotime($updatedAt) : false;
+
     if (is_int($value) || is_float($value) || (is_string($value) && is_numeric($value))) {
-        $timestamp = (int) $value;
-        if ($timestamp > 9999999999) {
-            $timestamp = (int) floor($timestamp / 1000);
+        $duration = (int) $value;
+        if ($duration <= 0 || $updatedTimestamp === false) {
+            return null;
         }
 
-        return $timestamp > 0 ? $timestamp : null;
+        if ($duration > 31536000) {
+            $duration = (int) floor($duration / 1000);
+        }
+
+        return $updatedTimestamp + $duration;
     }
 
     if (is_string($value) && trim($value) !== '') {
@@ -259,7 +265,7 @@ function coc_timer_timestamp($value): ?int
                                             <?php if (in_array($attribute, ['name', 'data', 'id', 'lvl', 'level'], true) || is_array($value)) continue; ?>
                                             <?php
                                             $isTimer = strtolower((string) $attribute) === 'timer';
-                                            $timerTimestamp = $isTimer ? coc_timer_timestamp($value) : null;
+                                            $timerTimestamp = $isTimer ? coc_timer_deadline($value, $account['updated_at'] ?? null) : null;
                                             if ($isTimer && (!$timerTimestamp || $timerTimestamp <= time())) {
                                                 continue;
                                             }
