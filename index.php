@@ -48,7 +48,8 @@ if (!$staticPage && $dbReady) {
         $currentPage = min($currentPage, $totalPages);
         $offset = ($currentPage - 1) * $accountsPerPage;
 
-        $stmt = $pdo->prepare('SELECT id, name, hall, data, avatar, price FROM coc' . $whereSql . ' ORDER BY id DESC LIMIT ? OFFSET ?');
+        $orderSql = $townhall > 0 ? ' ORDER BY id DESC' : ' ORDER BY hall DESC, id DESC';
+        $stmt = $pdo->prepare('SELECT id, name, hall, data, avatar, price FROM coc' . $whereSql . $orderSql . ' LIMIT ? OFFSET ?');
         $stmtParams = array_merge($params, [$accountsPerPage, $offset]);
         foreach ($stmtParams as $index => $value) {
             $stmt->bindValue($index + 1, $value, is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
