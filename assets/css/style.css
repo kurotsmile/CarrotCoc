@@ -289,8 +289,7 @@ body {
 }
 
 .supercell-metric,
-.supercell-card,
-.supercell-item {
+.supercell-card {
     background: rgba(255, 255, 255, .1);
     border: 1px solid rgba(255, 255, 255, .16);
     border-radius: 8px;
@@ -364,12 +363,12 @@ body {
 
 .supercell-items {
     display: grid;
-    gap: .65rem;
+    gap: .35rem;
     max-height: 28rem;
     overflow: auto;
     scrollbar-width: thin;
     scrollbar-color: rgba(137, 255, 183, .5) rgba(255, 255, 255, .08);
-    padding: 1rem;
+    padding: .7rem;
 }
 
 .supercell-items::-webkit-scrollbar {
@@ -391,14 +390,19 @@ body {
 }
 
 .supercell-item {
-    padding: .8rem;
+    padding: .52rem .4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+
+.supercell-item:last-child {
+    border-bottom: 0;
 }
 
 .supercell-item-main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: .75rem;
+    gap: .6rem;
     font-weight: 800;
 }
 
@@ -410,7 +414,7 @@ body {
 .supercell-object {
     display: inline-flex;
     align-items: center;
-    gap: .65rem;
+    gap: .5rem;
 }
 
 .supercell-object img {
@@ -434,17 +438,27 @@ body {
 .supercell-chips {
     display: flex;
     flex-wrap: wrap;
-    gap: .4rem;
-    margin-top: .55rem;
+    gap: .32rem;
+    margin-top: .38rem;
 }
 
-.supercell-chips span {
-    padding: .2rem .45rem;
+.supercell-chips > span {
+    padding: .16rem .4rem;
     color: var(--muted);
     background: rgba(255, 255, 255, .08);
     border: 1px solid rgba(255, 255, 255, .12);
     border-radius: 999px;
     font-size: .76rem;
+}
+
+.supercell-chips .supercell-timer {
+    display: inline-flex;
+    align-items: center;
+    gap: .28rem;
+    color: #a7ffc9;
+    background: rgba(126, 255, 180, .12);
+    border-color: rgba(126, 255, 180, .2);
+    font-weight: 800;
 }
 
 .secret-box {

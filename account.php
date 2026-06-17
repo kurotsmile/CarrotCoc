@@ -35,6 +35,25 @@ $seoDescription = $account
     : 'Tài khoản Clash of Clans không tồn tại hoặc đã được gỡ khỏi COC Shop.';
 $canonicalUrl = $account ? $siteUrl . '/account.php?id=' . (int) $account['id'] : $siteUrl . '/';
 $seoImage = $account && $account['avatar'] ? $account['avatar'] : $siteUrl . '/assets/coc_logo.png';
+
+function coc_timer_timestamp($value): ?int
+{
+    if (is_int($value) || is_float($value) || (is_string($value) && is_numeric($value))) {
+        $timestamp = (int) $value;
+        if ($timestamp > 9999999999) {
+            $timestamp = (int) floor($timestamp / 1000);
+        }
+
+        return $timestamp > 0 ? $timestamp : null;
+    }
+
+    if (is_string($value) && trim($value) !== '') {
+        $timestamp = strtotime($value);
+        return $timestamp !== false ? $timestamp : null;
+    }
+
+    return null;
+}
 ?>
 <!doctype html>
 <html lang="vi">
@@ -238,7 +257,18 @@ $seoImage = $account && $account['avatar'] ? $account['avatar'] : $siteUrl . '/a
                                     <div class="supercell-chips">
                                         <?php foreach ($item as $attribute => $value): ?>
                                             <?php if (in_array($attribute, ['name', 'data', 'id', 'lvl', 'level'], true) || is_array($value)) continue; ?>
-                                            <span><?= htmlspecialchars((string) $attribute) ?>: <?= htmlspecialchars((string) $value) ?></span>
+                                            <?php
+                                            $isTimer = strtolower((string) $attribute) === 'timer';
+                                            $timerTimestamp = $isTimer ? coc_timer_timestamp($value) : null;
+                                            if ($isTimer && (!$timerTimestamp || $timerTimestamp <= time())) {
+                                                continue;
+                                            }
+                                            ?>
+                                            <?php if ($isTimer): ?>
+                                                <span class="supercell-timer" data-timer="<?= (int) $timerTimestamp ?>"><i class="bi bi-clock" aria-hidden="true"></i><span data-timer-label></span></span>
+                                            <?php else: ?>
+                                                <span><?= htmlspecialchars((string) $attribute) ?>: <?= htmlspecialchars((string) $value) ?></span>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
@@ -281,5 +311,38 @@ paypal.Buttons({
 }).render('#paypal-button-container');
 </script>
 <?php endif; ?>
+<script>
+(() => {
+    const timers = Array.from(document.querySelectorAll('[data-timer]'));
+    if (!timers.length) return;
+
+    const formatRemaining = (seconds) => {
+        const days = Math.floor(seconds / 86400);
+        const hours = Math.floor((seconds % 86400) / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        const clock = [hours, minutes, secs].map((part) => String(part).padStart(2, '0')).join(':');
+        return days > 0 ? `${days}d ${clock}` : clock;
+    };
+
+    const tick = () => {
+        const now = Math.floor(Date.now() / 1000);
+        timers.forEach((timer) => {
+            const target = Number(timer.dataset.timer || 0);
+            const remaining = target - now;
+            if (remaining <= 0) {
+                timer.hidden = true;
+                return;
+            }
+
+            const label = timer.querySelector('[data-timer-label]');
+            if (label) label.textContent = formatRemaining(remaining);
+        });
+    };
+
+    tick();
+    setInterval(tick, 1000);
+})();
+</script>
 </body>
 </html>
