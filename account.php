@@ -1,6 +1,9 @@
 <?php
 require __DIR__ . '/config/database.php';
 require __DIR__ . '/includes/coc_helpers.php';
+require __DIR__ . '/includes/visit_tracker.php';
+
+visit_track_daily_ip($pdo ?? null);
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 $account = $pdo instanceof PDO ? coc_fetch_account($pdo, $id) : null;

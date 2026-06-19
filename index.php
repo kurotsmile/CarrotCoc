@@ -1,6 +1,9 @@
 <?php
 require __DIR__ . '/config/database.php';
 require __DIR__ . '/includes/coc_helpers.php';
+require __DIR__ . '/includes/visit_tracker.php';
+
+visit_track_daily_ip($pdo ?? null);
 
 $accounts = [];
 $townhall = isset($_GET['townhall']) ? (int) $_GET['townhall'] : 0;
