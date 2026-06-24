@@ -13,6 +13,7 @@ if (!$account) {
 }
 
 $data = $account ? coc_decode_json($account['data']) : [];
+$objectNameMap = coc_object_name_map();
 $photos = $account ? array_values(array_filter(coc_decode_photos($account['photos']), fn($photo) => filter_var($photo, FILTER_VALIDATE_URL))) : [];
 $th = $account ? coc_account_hall($account) : 0;
 $supercellGroups = [
@@ -230,7 +231,7 @@ function coc_timer_deadline($value, ?string $updatedAt): ?int
                             <?php foreach ($items as $item): ?>
                                 <?php if (!is_array($item)) continue; ?>
                                 <?php
-                                $itemName = (string) ($item['name'] ?? $item['data'] ?? $item['id'] ?? 'Item');
+                                $itemName = coc_object_display_name($item, $objectNameMap);
                                 $itemLevel = $item['lvl'] ?? $item['level'] ?? null;
                                 $objectId = (string) ($item['data'] ?? $item['id'] ?? '');
                                 $objectImage = '';

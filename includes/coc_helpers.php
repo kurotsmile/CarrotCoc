@@ -15,6 +15,50 @@ function coc_decode_json(?string $json): array
     return is_array($decoded) ? $decoded : [];
 }
 
+function coc_object_name_map(): array
+{
+    static $names = null;
+
+    if ($names !== null) {
+        return $names;
+    }
+
+    $names = [];
+    $path = dirname(__DIR__) . '/coc_name_en.json';
+    if (!is_file($path)) {
+        return $names;
+    }
+
+    $collect = function ($value) use (&$collect, &$names): void {
+        if (!is_array($value)) {
+            return;
+        }
+
+        if (isset($value['data'], $value['name']) && !is_array($value['data']) && !is_array($value['name'])) {
+            $names[(string) $value['data']] = (string) $value['name'];
+        }
+
+        foreach ($value as $child) {
+            $collect($child);
+        }
+    };
+
+    $collect(coc_decode_json(file_get_contents($path) ?: null));
+
+    return $names;
+}
+
+function coc_object_display_name(array $item, array $nameMap): string
+{
+    $objectId = (string) ($item['data'] ?? $item['id'] ?? '');
+
+    if ($objectId !== '' && isset($nameMap[$objectId])) {
+        return $nameMap[$objectId];
+    }
+
+    return (string) ($item['name'] ?? $item['data'] ?? $item['id'] ?? 'Item');
+}
+
 function coc_decode_photos(?string $photos): array
 {
     $decoded = coc_decode_json($photos);
