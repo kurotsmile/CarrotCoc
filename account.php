@@ -75,6 +75,7 @@ function coc_timer_deadline($value, ?string $updatedAt): ?int
     <meta name="keywords" content="acc coc giá rẻ, mua tài khoản clash of clan, mua acc clash of clans, acc town hall <?= htmlspecialchars((string) $th) ?>, shop acc coc uy tín">
     <meta name="robots" content="<?= $account ? 'index, follow, max-image-preview:large' : 'noindex, follow' ?>">
     <link rel="canonical" href="<?= htmlspecialchars($canonicalUrl) ?>">
+    <link rel="sitemap" type="application/xml" href="<?= htmlspecialchars($siteUrl . '/sitemap.xml') ?>">
     <meta property="og:type" content="<?= $account ? 'product' : 'website' ?>">
     <meta property="og:site_name" content="COC Shop">
     <meta property="og:title" content="<?= htmlspecialchars($seoTitle) ?>">

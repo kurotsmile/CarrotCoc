@@ -85,6 +85,7 @@ if ($staticPage) {
     <meta name="keywords" content="<?= htmlspecialchars($seoKeywords) ?>">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <link rel="canonical" href="<?= htmlspecialchars($canonicalUrl) ?>">
+    <link rel="sitemap" type="application/xml" href="<?= htmlspecialchars($siteUrl . '/sitemap.xml') ?>">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="COC Shop">
     <meta property="og:title" content="<?= htmlspecialchars($seoTitle) ?>">

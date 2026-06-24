@@ -1,26 +1,27 @@
 <section class="glass-panel page-panel p-4 p-lg-5">
     <p class="text-uppercase fw-bold muted-text mb-2">COC Shop</p>
-    <h1>Policy</h1>
+    <h1>Chính sách mua acc COC</h1>
     <p>
-        This policy explains the basic terms for purchasing digital game accounts from COC Shop. By placing an order,
-        you agree to review the account information carefully before completing payment.
+        Chính sách này áp dụng cho việc mua tài khoản Clash of Clans tại COC Shop. Trước khi thanh toán, khách hàng
+        nên kiểm tra kỹ tên acc, cấp Town Hall, hình ảnh, giá và các thông tin hiển thị trên trang chi tiết sản phẩm.
     </p>
 
-    <h2>Orders And Delivery</h2>
+    <h2>Đơn hàng và bàn giao</h2>
     <p>
-        Login information is displayed after a successful PayPal payment capture. Customers should save their purchase
-        information and contact support immediately if there is any issue accessing the account.
+        Sau khi thanh toán PayPal được xác nhận thành công, thông tin đăng nhập sẽ được hiển thị trên trang đơn hàng.
+        Khách hàng nên lưu lại thông tin mua hàng và liên hệ hỗ trợ ngay nếu gặp lỗi khi nhận hoặc đăng nhập tài khoản.
     </p>
 
-    <h2>Refunds</h2>
+    <h2>Hoàn tiền và xử lý sự cố</h2>
     <p>
-        Because accounts are digital goods, refunds may be limited once login details have been delivered. Each support
-        request is reviewed based on payment status, account condition, and the details provided by the customer.
+        Vì tài khoản game là sản phẩm số, yêu cầu hoàn tiền có thể bị giới hạn sau khi thông tin đăng nhập đã được bàn
+        giao. Mỗi trường hợp sẽ được xem xét dựa trên trạng thái thanh toán, tình trạng tài khoản và bằng chứng do khách
+        hàng cung cấp.
     </p>
 
-    <h2>Customer Responsibility</h2>
+    <h2>Trách nhiệm của khách hàng</h2>
     <p>
-        Customers are responsible for keeping login details secure after delivery. Please avoid sharing account access
-        with third parties.
+        Khách hàng chịu trách nhiệm bảo mật thông tin đăng nhập sau khi nhận acc. Không nên chia sẻ tài khoản cho bên
+        thứ ba và nên thay đổi các thông tin bảo mật cần thiết ngay sau khi tiếp nhận tài khoản.
     </p>
 </section>
