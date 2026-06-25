@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/config/database.php';
 require __DIR__ . '/includes/coc_helpers.php';
+require __DIR__ . '/includes/paypal_config.php';
 require __DIR__ . '/includes/visit_tracker.php';
 
 visit_track_daily_ip($pdo ?? null);
@@ -27,8 +28,8 @@ $supercellGroups = [
     'pets' => ['title' => 'Pets', 'icon' => 'bi-heart'],
     'obstacles' => ['title' => 'Obstacles', 'icon' => 'bi-tree'],
 ];
-$paypalConfig = require __DIR__ . '/config/paypal.php';
-$paypalClientId = $paypalConfig['client_id'] ?? '';
+$paypalConfig = coc_paypal_config_from_db($pdo ?? null, 'coc');
+$paypalClientId = !empty($paypalConfig['enabled']) ? ($paypalConfig['client_id'] ?? '') : '';
 $paypalCurrency = $paypalConfig['currency'] ?? 'USD';
 $siteUrl = 'https://coc.carrot28.com';
 $seoTitle = $account

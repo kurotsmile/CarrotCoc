@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../includes/paypal_config.php';
 
 function paypal_json_response(array $payload, int $status = 200): void
 {
@@ -10,21 +12,15 @@ function paypal_json_response(array $payload, int $status = 200): void
 
 function paypal_config(): array
 {
-    $fileConfig = require __DIR__ . '/../config/paypal.php';
-    $mode = $fileConfig['mode'] ?? 'sandbox';
-
-    return [
-        'client_id' => $fileConfig['client_id'] ?? '',
-        'secret' => $fileConfig['client_secret'] ?? '',
-        'currency' => $fileConfig['currency'] ?? 'USD',
-        'base_url' => $mode === 'live'
-            ? 'https://api-m.paypal.com'
-            : 'https://api-m.sandbox.paypal.com',
-    ];
+    return coc_paypal_config_from_db($GLOBALS['pdo'] ?? null, 'coc');
 }
 
 function paypal_access_token(array $config): string
 {
+    if (empty($config['enabled'])) {
+        paypal_json_response(['error' => 'PayPal đang tắt'], 500);
+    }
+
     if (!$config['client_id'] || !$config['secret']) {
         paypal_json_response(['error' => 'Thiếu PAYPAL_CLIENT_ID hoặc PAYPAL_CLIENT_SECRET'], 500);
     }
