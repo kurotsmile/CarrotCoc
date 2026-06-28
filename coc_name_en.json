@@ -766,43 +766,43 @@
     "spells": [
         {
             "data": 26000000,
-            "lvl": 8
+            "name": "Lightning Spell"
         },
         {
             "data": 26000001,
-            "lvl": 9
+            "name": "Healing Spell"
         },
         {
             "data": 26000002,
-            "lvl": 7
+            "name": "Rage Spell"
         },
         {
             "data": 26000003,
-            "lvl": 2
+            "name": "Jump Spell"
         },
         {
             "data": 26000005,
-            "lvl": 8
+            "name": "Freeze Spell"
         },
         {
             "data": 26000009,
-            "lvl": 12
+            "name": "Poison Spell"
         },
         {
             "data": 26000010,
-            "lvl": 5
+            "name": "Earthquake Spell"
         },
         {
             "data": 26000011,
-            "lvl": 5
+            "name": "Haste Spell"
         },
         {
             "data": 26000016,
-            "lvl": 2
+            "name": "Clone Spell"
         },
         {
             "data": 26000017,
-            "lvl": 3
+            "name": "Skeleton Spell"
         },
         {
             "data": 26000028,
