@@ -109,8 +109,7 @@
         },
         {
             "data": 1000002,
-            "lvl": 16,
-            "cnt": 7
+            "name": "Elixir Collector"
         },
         {
             "data": 1000003,
