@@ -115,13 +115,11 @@
         },
         {
             "data": 1000003,
-            "lvl": 17,
-            "cnt": 2
+            "name": "Elixir Storage"
         },
         {
             "data": 1000003,
-            "lvl": 19,
-            "cnt": 2
+            "name": "Elixir Storage"
         },
         {
             "data": 1000004,
@@ -135,13 +133,11 @@
         },
         {
             "data": 1000005,
-            "lvl": 18,
-            "cnt": 2
+            "name": "Gold Storage"
         },
         {
             "data": 1000005,
-            "lvl": 19,
-            "cnt": 2
+            "name": "Gold Storage"
         },
         {
             "data": 1000006,
@@ -591,19 +587,19 @@
     "units": [
         {
             "data": 4000000,
-            "lvl": 12
+            "name": "Barbarian"
         },
         {
             "data": 4000001,
-            "lvl": 10
+            "name": "Archer"
         },
         {
             "data": 4000002,
-            "lvl": 5
+            "name": "Goblin"
         },
         {
             "data": 4000003,
-            "lvl": 8
+            "name": "Giant"
         },
         {
             "data": 4000004,
