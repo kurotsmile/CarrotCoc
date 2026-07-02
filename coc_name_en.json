@@ -195,18 +195,7 @@
         },
         {
             "data": 1000015,
-            "lvl": 1,
-            "cnt": 1
-        },
-        {
-            "data": 1000015,
-            "lvl": 3,
-            "cnt": 2
-        },
-        {
-            "data": 1000015,
-            "lvl": 5,
-            "cnt": 2
+            "name": "Builder's Hut"
         },
         {
             "data": 1000019,
@@ -269,8 +258,7 @@
         },
         {
             "data": 1000029,
-            "lvl": 7,
-            "cnt": 1
+            "name": "Dark Spell Factory"
         },
         {
             "data": 1000031,
@@ -308,8 +296,7 @@
         },
         {
             "data": 1000071,
-            "lvl": 12,
-            "cnt": 1
+            "name": "Hero Hall"
         },
         {
             "data": 1000072,
