@@ -100,8 +100,7 @@
         },
         {
             "data": 1000000,
-            "lvl": 14,
-            "cnt": 4
+            "name": "Army Camp"
         },
         {
             "data": 1000001,
@@ -178,13 +177,7 @@
         },
         {
             "data": 1000012,
-            "lvl": 7,
-            "cnt": 1
-        },
-        {
-            "data": 1000012,
-            "lvl": 8,
-            "cnt": 3
+            "name":"Air Defense"
         },
         {
             "data": 1000013,
@@ -279,6 +272,10 @@
             "data": 1000029,
             "lvl": 7,
             "cnt": 1
+        },
+        {
+            "data": 1000031,
+            "name": "Eagle Artillery"
         },
         {
             "data": 1000032,
