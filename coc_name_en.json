@@ -228,8 +228,7 @@
         },
         {
             "data": 1000020,
-            "lvl": 9,
-            "cnt": 1
+            "name":"Spell Factory"
         },
         {
             "data": 1000021,
