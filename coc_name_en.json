@@ -315,13 +315,7 @@
         },
         {
             "data": 1000084,
-            "lvl": 1,
-            "cnt": 2
-        },
-        {
-            "data": 1000084,
-            "lvl": 4,
-            "cnt": 1
+            "name": "Multi-Archer Tower"
         },
         {
             "data": 1000085,
