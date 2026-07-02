@@ -243,8 +243,7 @@
         },
         {
             "data": 1000026,
-            "lvl": 10,
-            "cnt": 1
+            "name": "Dark Barracks"
         },
         {
             "data": 1000027,
@@ -271,8 +270,7 @@
         },
         {
             "data": 1000059,
-            "lvl": 9,
-            "cnt": 1
+            "name": "Workshop"
         },
         {
             "data": 1000064,
@@ -286,8 +284,7 @@
         },
         {
             "data": 1000068,
-            "lvl": 12,
-            "cnt": 1
+            "name": "Pet House"
         },
         {
             "data": 1000070,
