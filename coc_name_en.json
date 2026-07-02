@@ -804,52 +804,51 @@
     "pets": [
         {
             "data": 73000000,
-            "lvl": 15
+            "name": "L.A.S.S.I"
         },
         {
             "data": 73000001,
-            "lvl": 7,
-            "timer": 239170
+            "name": "Electro Owl"
         },
         {
             "data": 73000002,
-            "lvl": 15
+            "name": "Mighty Yak"
         },
         {
             "data": 73000003,
-            "lvl": 4
+            "name": "Unicorn"
         },
         {
             "data": 73000004,
-            "lvl": 10
+            "name": "Phoenix"
         },
         {
             "data": 73000007,
-            "lvl": 3
+            "name": "Poison Lizard"
         },
         {
             "data": 73000008,
-            "lvl": 4
+            "name": "Diggy"
         },
         {
             "data": 73000009,
-            "lvl": 3
+            "name": "Frosty"
         },
         {
             "data": 73000010,
-            "lvl": 1
+            "name": "Spirit Fox"
         },
         {
             "data": 73000011,
-            "lvl": 1
+            "name": "Angry Jelly"
         },
         {
             "data": 73000016,
-            "lvl": 9
+            "name": "Sneezy"
         },
         {
             "data": 73000017,
-            "lvl": 5
+            "name": "Greedy Raven"
         }
     ],
     "equipment": [
